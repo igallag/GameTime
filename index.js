@@ -27,5 +27,5 @@ client.on('message', msg => {
   }
 });
 
-
+// This is no logging in at the moment but the token and permissions are correct
 client.login(auth.token);
