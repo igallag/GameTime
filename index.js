@@ -6,7 +6,9 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   
 });
-
+// this is where the message checker is
+// reads all messages sent in the server to respond
+// should probably add the auth.prefix so it only checks the full message if there is the proper prefix
 client.on('message', msg => {
   if (msg.content.toLowerCase() === 'ping') {
     msg.reply('pong');
