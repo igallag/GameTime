@@ -33,9 +33,19 @@ client.on('message', msg => {
       msg.channel.send(`${users} are all here!`);
     } else if(msg.content.toLowerCase() === 'fuck'){
         msg.author.send('Hey pal, maybe cool it with the swears')
-    } else if(msg.content.toLowerCase() === 'what game')
+    } 
+    // else if(msg.content.toLowerCase() === 'what game') {
+    //     let game = msg.author
+    // }
   }
 });
+
+client.on('presenceUpdate', (oldMember, newMember) => {
+    if(newMember.presence.game){
+        newMember.send(`you started playing ${newMember.presence.game.name}`)
+        console.log(newMember.presence)
+    }
+})
 
 // This is no logging in at the moment but the token and permissions are correct
 client.login(auth.token);
