@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const User = db.define('user', {
-  email: {
+  /*email: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false
@@ -26,7 +26,10 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
-  }
+  }*/
+  // The User Model needs the information to DM a user
+  // needs a list of subscribed games (through table probably)
+  // will be able to subscribe to users again probably a through table as in User.hasMany(User as friends) or something like that
 })
 
 module.exports = User
