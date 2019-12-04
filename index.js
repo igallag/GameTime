@@ -1,6 +1,8 @@
 const {Client, Attachment} = require('discord.js')
 const client = new Client()
 const auth = require('./auth.json')
+// const fetch = require('node-fetch');
+const axios = require('axios')
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`)
@@ -8,7 +10,7 @@ client.on('ready', () => {
 // this is where the message checker is
 // reads all messages sent in the server to respond
 // should probably add the auth.prefix so it only checks the full message if there is the proper prefix
-client.on('message', msg => {
+client.on('message', async msg => {
   //   console.log(msg, 'this is message');
 
   if (msg.author.username !== 'GameTime') {
@@ -26,14 +28,15 @@ client.on('message', msg => {
         })
       })
 
-      //   let userStr = users.split('');
       msg.channel.send(`${users} are all here!`)
     } else if (msg.content.toLowerCase() === 'fuck') {
       msg.author.send('Hey pal, maybe cool it with the swears')
+    } else if (msg.content.toLowerCase() === 'api test'){
+      let {data} = await axios.get(`http://localhost:8080/api/users/${msg.author.id}`)
+      let user = await client.fetchUser(data.discId)
+
+      msg.author.send(`You tried hitting an API route for ${user.username}.  [${data.subGames}] are the games they are subscribed to!`)
     }
-    // else if(msg.content.toLowerCase() === 'what game') {
-    //     let game = msg.author
-    // }
   }
 })
 

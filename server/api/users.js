@@ -15,3 +15,18 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+// Get a discord user by Id
+router.get('/:discordId', async (req, res, next) => {
+  console.log('INSIDE THE API')
+  try {
+    const user = await User.findOne({
+      where: {
+        discId: req.params.discordId
+      }
+    })
+    res.status(200).json(user)
+  } catch (error) {
+    next(error)
+  }
+})

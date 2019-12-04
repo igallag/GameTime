@@ -30,6 +30,14 @@ const User = db.define('user', {
   // The User Model needs the information to DM a user
   // needs a list of subscribed games (through table probably)
   // will be able to subscribe to users again probably a through table as in User.hasMany(User as friends) or something like that
+  discId: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false,
+  },
+  subGames: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
+  }
 })
 
 module.exports = User
