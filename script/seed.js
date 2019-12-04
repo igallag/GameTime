@@ -3,15 +3,16 @@
 const db = require('../server/db')
 const {User} = require('../server/db/models')
 
-270298149694865418
-
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({discId: '240128586592288768' , subGames: ['League of Legends']}),
-    User.create({discId: '270298149694865418' , subGames: ['Rocket League']})
+    User.create({
+      discId: '240128586592288768',
+      subGames: ['League of Legends']
+    }),
+    User.create({discId: '270298149694865418', subGames: ['Rocket League']})
   ])
 
   console.log(`seeded ${users.length} users`)

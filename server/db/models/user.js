@@ -33,7 +33,7 @@ const User = db.define('user', {
   discId: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false,
+    allowNull: false
   },
   subGames: {
     type: Sequelize.ARRAY(Sequelize.STRING)
