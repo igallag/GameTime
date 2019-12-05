@@ -12,7 +12,8 @@ async function seed() {
       discId: '240128586592288768',
       subGames: ['League of Legends']
     }),
-    User.create({discId: '270298149694865418', subGames: ['Rocket League']})
+    User.create({discId: '270298149694865418', subGames: ['Rocket League']}),
+    User.create({discId: '190703180688916482', subGames: ['Rocket League']})
   ])
 
   console.log(`seeded ${users.length} users`)

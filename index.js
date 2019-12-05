@@ -15,6 +15,7 @@ client.on('message', async msg => {
 
   if (msg.author.username !== 'GameTime') {
     if (msg.content.toLowerCase() === 'ping') {
+      console.log(msg.author)
       msg.reply('pong')
     } else if (msg.content === '!code') {
       // This is a dumb test joke, the video is from the movie Hackers
@@ -52,9 +53,7 @@ client.on('message', async msg => {
 
 client.on('presenceUpdate', (oldMember, newMember) => {
   if (newMember.presence.game) {
-    console.log(newMember, 'THIS IS NEW MEMBER')
-    console.log(newMember.presence, 'Presence')
-    newMember.send(`you started playing ${newMember.presence.game.name}`)
+    // newMember.send(`you started playing ${newMember.presence.game.name}`)
 
     client.guilds.forEach(async guild => {
       await guild.members.forEach(async member => {
