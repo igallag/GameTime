@@ -15,6 +15,7 @@ client.on('message', async msg => {
 
   if (msg.author.username !== 'GameTime') {
     if (msg.content.toLowerCase() === 'ping') {
+      // This is used for testing to get a user's discord ID
       console.log(msg.author)
       msg.reply('pong')
     } else if (msg.content === '!code') {
@@ -55,6 +56,10 @@ client.on('presenceUpdate', (oldMember, newMember) => {
   if (newMember.presence.game) {
     // newMember.send(`you started playing ${newMember.presence.game.name}`)
 
+    /*
+    This will probably become too much if too many people have too many games given
+    this is basically a tripple nested loop 2x forEach and 1x .includes seems like O(n^3)
+    */
     client.guilds.forEach(async guild => {
       await guild.members.forEach(async member => {
         let {data} = await axios.get(
