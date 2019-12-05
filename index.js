@@ -35,6 +35,7 @@ client.on('message', async msg => {
       msg.author.send('Hey pal, maybe cool it with the swears')
     } else if (msg.content.toLowerCase() === 'api test') {
       // this was a test to see if I was able to hit API routes from a discord message
+
       let {data} = await axios.get(
         `http://localhost:8080/api/users/${msg.author.id}`
       )
@@ -51,8 +52,22 @@ client.on('message', async msg => {
 
 client.on('presenceUpdate', (oldMember, newMember) => {
   if (newMember.presence.game) {
+    console.log(newMember, 'THIS IS NEW MEMBER')
+    console.log(newMember.presence, 'Presence')
     newMember.send(`you started playing ${newMember.presence.game.name}`)
-    console.log(newMember.presence)
+
+    client.guilds.forEach(async guild => {
+      await guild.members.forEach(async member => {
+        let {data} = await axios.get(
+          `http://localhost:8080/api/users/${member.id}`
+        )
+        if (data.subGames.includes(newMember.presence.game.name)) {
+          member.send(
+            `${newMember} has started playing ${newMember.presence.game.name}`
+          )
+        }
+      })
+    })
   }
 })
 
