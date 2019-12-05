@@ -49,7 +49,11 @@ client.on('message', async msg => {
         }] are the games they are subscribed to!`
       )
     } else if (msg.content.startsWith('!addGame')) {
-      console.log('INSIDE ADD GAME')
+      /*
+      This will trim everything after the initial command and add it to the db
+      There are no protections as to the name and how the presence is read but it works
+      in a proof of concept.
+      */
       let gameName = msg.content.slice(8).trim()
       let {data} = await axios.post(
         `http://localhost:8080/api/users/${msg.author.id}`,
@@ -83,5 +87,4 @@ client.on('presenceUpdate', (oldMember, newMember) => {
   }
 })
 
-// This is no logging in at the moment but the token and permissions are correct
 client.login(auth.token)

@@ -30,9 +30,10 @@ router.get('/:discordId', async (req, res, next) => {
   }
 })
 
+// This allows a user to add games to their subbed games
+// Shouldadd some verification hooks in the model (will also comment there)
 router.post('/:discordId', async (req, res, next) => {
   try {
-    // console.log(req.body.game, 'this is req.body')
     const user = await User.findOne({
       where: {
         discId: req.params.discordId
@@ -42,7 +43,7 @@ router.post('/:discordId', async (req, res, next) => {
     await user.update({
       subGames: gameHolder
     })
-    // console.log(gameHolder)
+
     res.status(200).json(user)
   } catch (error) {
     next(error)

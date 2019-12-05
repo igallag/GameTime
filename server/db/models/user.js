@@ -35,6 +35,7 @@ const User = db.define('user', {
     unique: true,
     allowNull: false
   },
+  // There Will need to be a way to verify that these names arent busted
   subGames: {
     type: Sequelize.ARRAY(Sequelize.STRING)
   }
