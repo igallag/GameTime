@@ -48,6 +48,14 @@ client.on('message', async msg => {
           data.subGames
         }] are the games they are subscribed to!`
       )
+    } else if (msg.content.startsWith('!addGame')) {
+      console.log('INSIDE ADD GAME')
+      let gameName = msg.content.slice(8).trim()
+      let {data} = await axios.post(
+        `http://localhost:8080/api/users/${msg.author.id}`,
+        {game: gameName}
+      )
+      msg.author.send(`You subscribed to ${gameName}`)
     }
   }
 })

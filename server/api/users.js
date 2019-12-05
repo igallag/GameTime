@@ -18,13 +18,31 @@ router.get('/', async (req, res, next) => {
 
 // Get a discord user by Id
 router.get('/:discordId', async (req, res, next) => {
-  console.log('INSIDE THE API')
   try {
     const user = await User.findOne({
       where: {
         discId: req.params.discordId
       }
     })
+    res.status(200).json(user)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/:discordId', async (req, res, next) => {
+  try {
+    // console.log(req.body.game, 'this is req.body')
+    const user = await User.findOne({
+      where: {
+        discId: req.params.discordId
+      }
+    })
+    let gameHolder = [...user.subGames, req.body.game]
+    await user.update({
+      subGames: gameHolder
+    })
+    // console.log(gameHolder)
     res.status(200).json(user)
   } catch (error) {
     next(error)
