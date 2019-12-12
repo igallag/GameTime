@@ -23,6 +23,18 @@ const setTotalTime = totalTime => ({type: TOTAL_TIME, totalTime})
 /*
 Thunk Creators
 */
+export const setStartTimeThunk = () => {
+  return async dispatch => {
+    try {
+      // const {data} = axios.get()
+      let time = new Date()
+      dispatch(setStartTime(time))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 export const setTotalTimeThunk = () => {
   return async dispatch => {
     try {
