@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import axios from 'axios'
 /*
 Action Types
@@ -24,10 +25,9 @@ const setTotalTime = totalTime => ({type: TOTAL_TIME, totalTime})
 Thunk Creators
 */
 export const setStartTimeThunk = () => {
-  return async dispatch => {
+  return dispatch => {
     try {
-      // const {data} = axios.get()
-      let time = new Date()
+      let time = Date.now()
       dispatch(setStartTime(time))
     } catch (error) {
       console.error(error)
@@ -50,6 +50,12 @@ export const setTotalTimeThunk = () => {
 
 export default function(state = defaultState, action) {
   switch (action.type) {
+    case START_TIME:
+      return {...state, startTime: action.startTime}
+    case TOTAL_TIME:
+      let timeHolder = state.startTime - Date.now()
+      console.log(timeHolder, 'TIMEHOLDER ==========================')
+      return state
     default:
       return state
   }
