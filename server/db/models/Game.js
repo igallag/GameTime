@@ -14,6 +14,23 @@ const Game = db.define('game', {
     // this will be in minutes
     type: Sequelize.INTEGER,
     defaultValue: 0
+  },
+  slug: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+})
+
+Game.beforeValidate(game => {
+  /*
+   * Generate slug
+   */
+  if (!game.slug) {
+    game.slug = game.name
+      .replace(/\s/g, '_')
+      .replace(/\W/g, '')
+      .replace(/_/g, '-')
+      .toLowerCase()
   }
 })
 

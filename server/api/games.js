@@ -34,4 +34,19 @@ This should get a game that matches the game name and
 the userId of the user that requests it
 */
 
-// router.get('')
+router.get('/:discordId/:gameSlug', async (req, res, next) => {
+  try {
+    let game
+    const user = await User.findOne({
+      where: {
+        discId: req.params.discordId
+      }
+    })
+
+    if (user) {
+      console.log('farts')
+    }
+  } catch (error) {
+    next(error)
+  }
+})
