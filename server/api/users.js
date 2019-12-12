@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Game} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -20,6 +20,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:discordId', async (req, res, next) => {
   try {
     const user = await User.findOne({
+      include: [{model: Game}],
       where: {
         discId: req.params.discordId
       }
