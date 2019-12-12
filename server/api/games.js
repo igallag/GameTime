@@ -44,8 +44,47 @@ router.get('/:discordId/:gameSlug', async (req, res, next) => {
     })
 
     if (user) {
-      console.log('farts')
+      game = await Game.findOne({
+        where: {
+          slug: req.params.gameSlug,
+          userId: user.id
+        }
+      })
+    } else {
+      res.sendStatus(404)
     }
+    res.status(200).json(game)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/:discordId/:gameSlug', async (req, res, next) => {
+  try {
+    let game
+    const user = await User.findOne({
+      where: {
+        discId: req.params.discordId
+      }
+    })
+
+    if (user) {
+      game = await Game.findOne({
+        where: {
+          slug: req.params.gameSlug,
+          userId: user.id
+        }
+      })
+    } else {
+      res.sendStatus(404)
+    }
+    // This will have to be sent the new total in its entirety
+    // this is mostly a guess and untested but should look like this
+    await game.update({
+      timePlayed: req.body.total
+    })
+
+    res.status(200).json(game)
   } catch (error) {
     next(error)
   }
