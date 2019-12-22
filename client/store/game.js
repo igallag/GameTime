@@ -35,13 +35,11 @@ export const setStartTimeThunk = () => {
   }
 }
 
-export const setTotalTimeThunk = () => {
+export const setTotalTimeThunk = user => {
   return async dispatch => {
     try {
-      // const {data} = axios.get()
-      console.log(
-        'hey youre in the setTotalTimeThunk and we havent built it yet!'
-      )
+      let currTotal = await axios.get(`/api/games/${user.discId}`)
+      console.log(currTotal, 'this is currTotal')
     } catch (error) {
       console.error(error)
     }

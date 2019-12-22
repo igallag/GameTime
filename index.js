@@ -1,7 +1,8 @@
+/* eslint-disable complexity */
 const {Client} = require('discord.js')
 const client = new Client()
 const auth = require('./auth.json')
-// const fetch = require('node-fetch');
+// const setTotalTimeThunk = require('./client/store/game')
 const axios = require('axios')
 
 client.on('ready', () => {
@@ -10,6 +11,12 @@ client.on('ready', () => {
 // this is where the message checker is
 // reads all messages sent in the server to respond
 // should probably add the auth.prefix so it only checks the full message if there is the proper prefix
+
+/*
+* This is probably too complex given how many nested else ifs
+* but most are for testing
+*/
+
 client.on('message', async msg => {
   //   console.log(msg, 'this is message');
 
@@ -60,6 +67,12 @@ client.on('message', async msg => {
         {game: gameName}
       )
       msg.author.send(`You subscribed to ${gameName}`)
+    } else if (msg.content.toLowerCase() === 'start test') {
+      console.log('test started')
+    } else if (msg.content.toLowerCase() === 'end test') {
+      console.log('test ended')
+
+      console.log(`the result was: `)
     }
   }
 })
