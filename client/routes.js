@@ -16,6 +16,12 @@ class Routes extends Component {
   render() {
     const {isLoggedIn} = this.props
 
+    /*
+    * I think I need to make a front end component to call
+    * the redux thunks to keep time and maybe this is where
+    * I could do some weird D3 shit
+    */
+
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
