@@ -6,7 +6,9 @@ import {setStartTimeThunk, setTotalTimeThunk} from '../store/game'
 * Component for front end time holding
 */
 
-const timeHolder = props => {
+export const timeHolder = props => {
+  console.log(props.user, 'USER')
+  console.log(props.game, 'GAME')
   return (
     <div>
       <h2>Welcome to Time Holder, home of the Time Wizard</h2>
