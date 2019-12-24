@@ -89,3 +89,7 @@ router.put('/:discordId/:gameSlug', async (req, res, next) => {
     next(error)
   }
 })
+
+/*
+* This is where You would update the start time col in the game model
+*/

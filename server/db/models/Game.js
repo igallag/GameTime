@@ -18,6 +18,9 @@ const Game = db.define('game', {
   slug: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  startTime: {
+    type: Sequelize.DATEONLY
   }
 })
 
