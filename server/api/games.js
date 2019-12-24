@@ -80,9 +80,15 @@ router.put('/:discordId/:gameSlug', async (req, res, next) => {
     }
     // This will have to be sent the new total in its entirety
     // this is mostly a guess and untested but should look like this
-    await game.update({
-      timePlayed: req.body.total
-    })
+    if (req.body.total) {
+      await game.update({
+        timePlayed: req.body.total
+      })
+    } else if (req.body.startTime) {
+      await game.update({
+        startTime: req.body.startTime
+      })
+    }
 
     res.status(200).json(game)
   } catch (error) {

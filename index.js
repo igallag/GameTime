@@ -67,12 +67,43 @@ client.on('message', async msg => {
         {game: gameName}
       )
       msg.author.send(`You subscribed to ${gameName}`)
-    } else if (msg.content.toLowerCase() === 'start test') {
+    } else if (msg.content.toLowerCase().startsWith('start test')) {
       console.log('test started')
-    } else if (msg.content.toLowerCase() === 'end test') {
+      let gameName = msg.content.slice(10).trim()
+      // this is just a temp test and will probably be moved
+      gameName = gameName
+        .replace(/\s/g, '_')
+        .replace(/\W/g, '')
+        .replace(/_/g, '-')
+        .toLowerCase()
+      let {data} = await axios.put(
+        `http://localhost:8080/api/games/${msg.author.id}/${gameName}`,
+        {startTime: Date.now()}
+      )
+      // console.log(`http://localhost:8080/api/games/${msg.author.id}/${gameName}`)
+    } else if (msg.content.toLowerCase().startsWith('end test')) {
       console.log('test ended')
+      let gameName = msg.content.slice(8).trim()
+      // console.log(gameName, 'GAME NAME')
+      // this is just a temp test and will probably be moved
+      gameName = gameName
+        .replace(/\s/g, '_')
+        .replace(/\W/g, '')
+        .replace(/_/g, '-')
+        .toLowerCase()
+      let currGame = await axios.get(
+        `http://localhost:8080/api/games/${msg.author.id}/${gameName}`
+      ).data
+      console.log(currGame)
 
-      console.log(`the result was: `)
+      let time = Date.now() - currGame.startTime
+
+      let {data} = await axios.put(
+        `http://localhost:8080/api/games/${msg.author.id}/${gameName}`,
+        {total: time}
+      )
+
+      // console.log(`the result was: ${data.timePlayed}`)
     }
   }
 })
