@@ -81,14 +81,12 @@ client.on('message', async msg => {
         .replace(/_/g, '-')
         .toLowerCase()
 
-      // let time = new Date();
       time = time.getTime()
-      // console.log(typeof(time))
+
       let {data} = await axios.put(
         `http://localhost:8080/api/games/${msg.author.id}/${gameName}`,
         {startTime: time}
       )
-      // console.log(`http://localhost:8080/api/games/${msg.author.id}/${gameName}`)
     } else if (msg.content.toLowerCase().startsWith('end test')) {
       console.log('test ended')
       let gameName = msg.content.slice(8).trim()
