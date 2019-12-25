@@ -108,20 +108,20 @@ client.on('message', async msg => {
       // time = time.getTime() - currGame.startTime
       let endTime = Date.now()
       let startTime = Date.parse(currGame.startTime)
-      // console.log(Date.now(), 'This is Date.now')
-      // console.log(endTime, 'This is Time')
-      // console.log(Date.parse(currGame.startTime), 'This is startTime')
 
-      let total = endTime - startTime
+      let finalTotal = endTime - startTime
 
-      // let {data} = await axios.put(
-      //   `http://localhost:8080/api/games/${msg.author.id}/${gameName}`,
-      //   {total: time}
-      // )
+      finalTotal = Math.floor(finalTotal / 60000)
+      let {data} = await axios.put(
+        `http://localhost:8080/api/games/${msg.author.id}/${gameName}`,
+        {total: finalTotal}
+      )
 
-      total = Math.floor(total / 60000)
-
-      console.log(`the result was: ${total} mins`)
+      console.log(
+        `the current session was: ${finalTotal} mins long.  The total time played is ${
+          data.timePlayed
+        }`
+      )
     }
   }
 })
