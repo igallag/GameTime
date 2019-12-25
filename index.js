@@ -20,6 +20,8 @@ client.on('ready', () => {
 client.on('message', async msg => {
   //   console.log(msg, 'this is message');
 
+  let time = new Date()
+
   if (msg.author.username !== 'GameTime') {
     if (msg.content.toLowerCase() === 'ping') {
       // This is used for testing to get a user's discord ID
@@ -76,9 +78,13 @@ client.on('message', async msg => {
         .replace(/\W/g, '')
         .replace(/_/g, '-')
         .toLowerCase()
+
+      // let time = new Date();
+      time = time.getTime()
+      // console.log(typeof(time))
       let {data} = await axios.put(
         `http://localhost:8080/api/games/${msg.author.id}/${gameName}`,
-        {startTime: Date.now()}
+        {startTime: time}
       )
       // console.log(`http://localhost:8080/api/games/${msg.author.id}/${gameName}`)
     } else if (msg.content.toLowerCase().startsWith('end test')) {
@@ -93,15 +99,16 @@ client.on('message', async msg => {
         .toLowerCase()
       let currGame = await axios.get(
         `http://localhost:8080/api/games/${msg.author.id}/${gameName}`
-      ).data
-      console.log(currGame)
-
-      let time = Date.now() - currGame.startTime
-
-      let {data} = await axios.put(
-        `http://localhost:8080/api/games/${msg.author.id}/${gameName}`,
-        {total: time}
       )
+      currGame = currGame.data
+      console.log(currGame, 'This is currGame')
+
+      // let time = Date.now() - currGame.startTime
+      // console.log(time, 'This is Time')
+      // let {data} = await axios.put(
+      //   `http://localhost:8080/api/games/${msg.author.id}/${gameName}`,
+      //   {total: time}
+      // )
 
       // console.log(`the result was: ${data.timePlayed}`)
     }
