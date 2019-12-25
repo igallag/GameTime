@@ -20,7 +20,7 @@ const Game = db.define('game', {
     allowNull: false
   },
   startTime: {
-    type: Sequelize.INTEGER
+    type: Sequelize.DATE
   }
 })
 

@@ -1,4 +1,8 @@
+/* eslint-disable max-statements */
 /* eslint-disable complexity */
+// The Above things should be deleted as I clean up the client logic but for testing I will
+// Keep it disabled
+
 const {Client} = require('discord.js')
 const client = new Client()
 const auth = require('./auth.json')
@@ -18,8 +22,6 @@ client.on('ready', () => {
 */
 
 client.on('message', async msg => {
-  //   console.log(msg, 'this is message');
-
   let time = new Date()
 
   if (msg.author.username !== 'GameTime') {
@@ -32,7 +34,7 @@ client.on('message', async msg => {
       msg.channel.send('https://youtu.be/u3CKgkyc7Qo?t=20')
     } else if (msg.content.toLowerCase() === 'who is here') {
       // this was a test of being able to read users in the channel
-      // seems kind of cumbersome to have nested loops but there are only 3 users in 1 server
+      // seems kind of cumbersome to have nested loops but there are only 4 users in 1 server
       let users = []
       client.guilds.forEach(async guild => {
         await guild.members.forEach(el => {
@@ -101,16 +103,25 @@ client.on('message', async msg => {
         `http://localhost:8080/api/games/${msg.author.id}/${gameName}`
       )
       currGame = currGame.data
-      console.log(currGame, 'This is currGame')
+      // console.log(currGame, 'This is currGame')
 
-      // let time = Date.now() - currGame.startTime
-      // console.log(time, 'This is Time')
+      // time = time.getTime() - currGame.startTime
+      let endTime = Date.now()
+      let startTime = Date.parse(currGame.startTime)
+      // console.log(Date.now(), 'This is Date.now')
+      // console.log(endTime, 'This is Time')
+      // console.log(Date.parse(currGame.startTime), 'This is startTime')
+
+      let total = endTime - startTime
+
       // let {data} = await axios.put(
       //   `http://localhost:8080/api/games/${msg.author.id}/${gameName}`,
       //   {total: time}
       // )
 
-      // console.log(`the result was: ${data.timePlayed}`)
+      total = Math.floor(total / 60000)
+
+      console.log(`the result was: ${total} mins`)
     }
   }
 })
