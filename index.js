@@ -1,7 +1,8 @@
 /* eslint-disable max-statements */
 /* eslint-disable complexity */
-// The Above things should be deleted as I clean up the client logic but for testing I will
-// Keep it disabled
+/* The Above things should be deleted as I clean up the client logic but for testing I will
+*  Keep it disabled
+*/
 
 const {Client} = require('discord.js')
 const client = new Client()
