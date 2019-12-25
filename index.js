@@ -92,7 +92,7 @@ client.on('message', async msg => {
     } else if (msg.content.toLowerCase().startsWith('end test')) {
       console.log('test ended')
       let gameName = msg.content.slice(8).trim()
-      // console.log(gameName, 'GAME NAME')
+
       // this is just a temp test and will probably be moved
       gameName = gameName
         .replace(/\s/g, '_')
@@ -103,9 +103,7 @@ client.on('message', async msg => {
         `http://localhost:8080/api/games/${msg.author.id}/${gameName}`
       )
       currGame = currGame.data
-      // console.log(currGame, 'This is currGame')
 
-      // time = time.getTime() - currGame.startTime
       let endTime = Date.now()
       let startTime = Date.parse(currGame.startTime)
 
