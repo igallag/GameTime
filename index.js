@@ -127,15 +127,21 @@ client.on('presenceUpdate', (oldMember, newMember) => {
   if (newMember.presence.game) {
     // newMember.send(`you started playing ${newMember.presence.game.name}`)
 
+    let gameName = newMember.presence.game.name
+
+    console.log(newMember.presence.game, 'This is newMember')
+
     /*
     This will probably become too much if too many people have too many games given
     this is basically a tripple nested loop 2x forEach and 1x .includes seems like O(n^3)
     */
+    // This notifies a user if someone in their server started playing a game they are subscribed to
     client.guilds.forEach(async guild => {
       await guild.members.forEach(async member => {
         let {data} = await axios.get(
           `http://localhost:8080/api/users/${member.id}`
         )
+
         if (data.subGames.includes(newMember.presence.game.name)) {
           member.send(
             `${newMember} has started playing ${newMember.presence.game.name}`
