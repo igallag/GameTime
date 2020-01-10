@@ -123,32 +123,76 @@ client.on('message', async msg => {
   }
 })
 
-client.on('presenceUpdate', (oldMember, newMember) => {
+client.on('presenceUpdate', async (oldMember, newMember) => {
+  let time = new Date()
+
   if (newMember.presence.game) {
     // newMember.send(`you started playing ${newMember.presence.game.name}`)
 
     let gameName = newMember.presence.game.name
+    gameName = gameName
+      .replace(/\s/g, '_')
+      .replace(/\W/g, '')
+      .replace(/_/g, '-')
+      .toLowerCase()
 
-    console.log(newMember.presence.game, 'This is newMember')
+    time = time.getTime()
+
+    // need to get the disc id from the new member
+    console.log(newMember.user.id, 'this is userID')
+    let {data} = await axios.put(
+      `http://localhost:8080/api/games/${newMember.user.id}/${gameName}`,
+      {startTime: time}
+    )
 
     /*
     This will probably become too much if too many people have too many games given
     this is basically a tripple nested loop 2x forEach and 1x .includes seems like O(n^3)
     */
     // This notifies a user if someone in their server started playing a game they are subscribed to
-    client.guilds.forEach(async guild => {
-      await guild.members.forEach(async member => {
-        let {data} = await axios.get(
-          `http://localhost:8080/api/users/${member.id}`
-        )
+    // client.guilds.forEach(async guild => {
+    //   await guild.members.forEach(async member => {
+    //     let {data} = await axios.get(
+    //       `http://localhost:8080/api/users/${member.id}`
+    //     )
 
-        if (data.subGames.includes(newMember.presence.game.name)) {
-          member.send(
-            `${newMember} has started playing ${newMember.presence.game.name}`
-          )
-        }
-      })
-    })
+    //     if (data.subGames.includes(newMember.presence.game.name)) {
+    //       member.send(
+    //         `${newMember} has started playing ${newMember.presence.game.name}`
+    //       )
+    //     }
+    //   })
+    // })
+  } else if (!newMember.presence.game) {
+    let gameName = oldMember.presence.game.name
+
+    gameName = gameName
+      .replace(/\s/g, '_')
+      .replace(/\W/g, '')
+      .replace(/_/g, '-')
+      .toLowerCase()
+    let currGame = await axios.get(
+      `http://localhost:8080/api/games/${newMember.user.id}/${gameName}`
+    )
+    currGame = currGame.data
+
+    let endTime = Date.now()
+    let startTime = Date.parse(currGame.startTime)
+
+    let finalTotal = endTime - startTime
+
+    finalTotal = Math.floor(finalTotal / 60000)
+    let {data} = await axios.put(
+      `http://localhost:8080/api/games/${newMember.user.id}/${gameName}`,
+      {total: finalTotal}
+    )
+
+    console.log(
+      `the current session was: ${finalTotal} mins long.  The total time played is ${
+        data.timePlayed
+      }`
+    )
+    // console.log(oldMember, 'THIS IS OLD MEMEBER')
   }
 })
 
