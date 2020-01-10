@@ -73,6 +73,10 @@ client.on('message', async msg => {
   }
 })
 
+/*
+* If a user has display game turned on they will be able to use this bot automatically.
+*/
+
 client.on('presenceUpdate', async (oldMember, newMember) => {
   let time = new Date()
 
