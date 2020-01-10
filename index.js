@@ -72,22 +72,6 @@ client.on('message', async msg => {
         {game: gameName}
       )
       msg.author.send(`You subscribed to ${gameName}`)
-    } else if (msg.content.toLowerCase().startsWith('start test')) {
-      console.log('test started')
-      let gameName = msg.content.slice(10).trim()
-      // this is just a temp test and will probably be moved
-      gameName = gameName
-        .replace(/\s/g, '_')
-        .replace(/\W/g, '')
-        .replace(/_/g, '-')
-        .toLowerCase()
-
-      time = time.getTime()
-
-      let {data} = await axios.put(
-        `http://localhost:8080/api/games/${msg.author.id}/${gameName}`,
-        {startTime: time}
-      )
     } else if (msg.content.toLowerCase().startsWith('end test')) {
       console.log('test ended')
       let gameName = msg.content.slice(8).trim()
