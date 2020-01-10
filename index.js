@@ -7,7 +7,6 @@
 const {Client} = require('discord.js')
 const client = new Client()
 const auth = require('./auth.json')
-// const setTotalTimeThunk = require('./client/store/game')
 const axios = require('axios')
 
 client.on('ready', () => {
@@ -23,8 +22,6 @@ client.on('ready', () => {
 */
 
 client.on('message', async msg => {
-  let time = new Date()
-
   if (msg.author.username !== 'GameTime') {
     if (msg.content.toLowerCase() === 'ping') {
       // This is used for testing to get a user's discord ID
@@ -80,8 +77,6 @@ client.on('presenceUpdate', async (oldMember, newMember) => {
   let time = new Date()
 
   if (newMember.presence.game) {
-    // newMember.send(`you started playing ${newMember.presence.game.name}`)
-
     let gameName = newMember.presence.game.name
     gameName = gameName
       .replace(/\s/g, '_')
