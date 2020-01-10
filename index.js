@@ -112,6 +112,9 @@ client.on('presenceUpdate', async (oldMember, newMember) => {
     //   })
     // })
   } else if (!newMember.presence.game) {
+    // Should check if there is a user that has the game that they started playing
+    // if not it should add the game and start the clock
+
     let gameName = oldMember.presence.game.name
 
     gameName = gameName
