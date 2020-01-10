@@ -192,7 +192,6 @@ client.on('presenceUpdate', async (oldMember, newMember) => {
         data.timePlayed
       }`
     )
-    // console.log(oldMember, 'THIS IS OLD MEMEBER')
   }
 })
 
