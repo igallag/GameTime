@@ -30,33 +30,6 @@ client.on('message', async msg => {
     } else if (msg.content === '!code') {
       // This is a dumb test joke, the video is from the movie Hackers
       msg.channel.send('https://youtu.be/u3CKgkyc7Qo?t=20')
-    } else if (msg.content.toLowerCase() === 'who is here') {
-      // this was a test of being able to read users in the channel
-      // seems kind of cumbersome to have nested loops but there are only 4 users in 1 server
-      let users = []
-      client.guilds.forEach(async guild => {
-        await guild.members.forEach(el => {
-          users.push(el.displayName)
-        })
-      })
-
-      msg.channel.send(`${users} are all here!`)
-    } else if (msg.content.toLowerCase() === 'fuck') {
-      // this was a test for being able to DM certain users
-      msg.author.send('Hey pal, maybe cool it with the swears')
-    } else if (msg.content.toLowerCase() === 'api test') {
-      // this was a test to see if I was able to hit API routes from a discord message
-
-      let {data} = await axios.get(
-        `http://localhost:8080/api/users/${msg.author.id}`
-      )
-      let user = await client.fetchUser(data.discId)
-
-      msg.author.send(
-        `You tried hitting an API route for ${user.username}.  [${
-          data.subGames
-        }] are the games they are subscribed to!`
-      )
     } else if (msg.content.startsWith('!addGame')) {
       /*
       This will trim everything after the initial command and add it to the db
@@ -79,8 +52,13 @@ client.on('message', async msg => {
 
 client.on('presenceUpdate', async (oldMember, newMember) => {
   let time = new Date()
-
+  // let userHolder = await axios.post(`http://localhost:8080/api/users/`, {discId: newMember.user.id})
   if (newMember.presence.game) {
+    let user = await axios.post(
+      `http://localhost:8080/api/users/${newMember.user.id}`
+    )
+    console.log(user, 'this is user')
+
     let gameName = newMember.presence.game.name
     gameName = gameName
       .replace(/\s/g, '_')

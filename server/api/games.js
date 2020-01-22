@@ -29,6 +29,15 @@ router.get('/:discordId', async (req, res, next) => {
   }
 })
 
+router.post('/', async (req, res, next) => {
+  try {
+    let game = req.body
+    console.log(game, 'this is game in gamesAPI')
+  } catch (error) {
+    next(error)
+  }
+})
+
 /*
 This should get a game that matches the game name and
 the userId of the user that requests it
@@ -96,7 +105,3 @@ router.put('/:discordId/:gameSlug', async (req, res, next) => {
     next(error)
   }
 })
-
-/*
-* This is where You would update the start time col in the game model
-*/

@@ -31,6 +31,20 @@ router.get('/:discordId', async (req, res, next) => {
   }
 })
 
+// This will find or create a user when it is hit
+router.post('/', async (req, res, next) => {
+  try {
+    const user = await User.findOrCreate({
+      where: {
+        discId: req.body.discId
+      }
+    })
+    res.status(200).json(user)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // This allows a user to add games to their subbed games
 // Shouldadd some verification hooks in the model (will also comment there)
 router.post('/:discordId', async (req, res, next) => {
