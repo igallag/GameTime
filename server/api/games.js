@@ -29,6 +29,26 @@ router.get('/:discordId', async (req, res, next) => {
   }
 })
 
+router.post('/:discordId', async (req, res, next) => {
+  try {
+    console.log('inside the post route for games')
+    const user = await User.findOne({
+      where: {
+        discId: req.params.discordId
+      }
+    })
+
+    const game = await Game.create({
+      name: req.body.game,
+      userId: user.id
+    })
+    res.status(200).json(game)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// I this will potentially get depricated
 router.post('/', async (req, res, next) => {
   try {
     let game = req.body

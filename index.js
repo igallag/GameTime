@@ -57,7 +57,11 @@ client.on('presenceUpdate', async (oldMember, newMember) => {
     let user = await axios.post(
       `http://localhost:8080/api/users/${newMember.user.id}`
     )
-    console.log(user, 'this is user')
+    // console.log(user, 'this is user')
+    let gameList = await axios.get(
+      `http://localhost:8080/api/games/${newMember.user.id}`
+    )
+    console.log(gameList, 'This is gameList')
 
     let gameName = newMember.presence.game.name
     gameName = gameName
@@ -69,7 +73,7 @@ client.on('presenceUpdate', async (oldMember, newMember) => {
     time = time.getTime()
 
     // need to get the disc id from the new member
-    console.log(newMember.user.id, 'this is userID')
+    // console.log(newMember.user.id, 'this is userID')
     let {data} = await axios.put(
       `http://localhost:8080/api/games/${newMember.user.id}/${gameName}`,
       {startTime: time}
